@@ -8,14 +8,11 @@ class AlertAreas
 {
     /**
      * Get the alert areas
+     * @param array $options
+     * @return mixed
      */
-    public function areas(array $options = []): Response
+    public function areas(array $options = [])
     {
-        /*$options = array_merge(
-            compact('start_date', 'interval', 'amount', 'field_key'),
-            $options
-        );*/
-
         return $this->request->get('alert_areas', $options);
     }
 

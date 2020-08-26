@@ -11,7 +11,6 @@ class SaferMeClient implements Client
 {
     /**
      * The Guzzle client instance.
-     *
      * @var GuzzleClient
      */
     protected $client;
@@ -19,9 +18,14 @@ class SaferMeClient implements Client
     protected $queryDefaults = [];
 
     /**
-     * GuzzleClient constructor.
+     * SaferMeClient constructor.
+     * @param string $url
+     * @param string $token
+     * @param string $appId
+     * @param int    $teamId
+     * @param string $installationId
      */
-    public function __construct(string $url, string $token, string $appId = 'com.thundermaps.main', int $teamId = 1234, string $installationId = '')
+    public function __construct($url, $token, $appId = 'com.thundermaps.main', $teamId = 1234, $installationId = '')
     {
         $this->client = new GuzzleClient(
             [
@@ -53,15 +57,12 @@ class SaferMeClient implements Client
     /**
      * Perform a POST request.
      *
-     * @param $url
-     * @param array $parameters
+     * @param string $url
+     * @param array  $parameters
      * @return Response
      */
     public function post($url, $parameters = [])
     {
-        // If any file key is found, we will assume we have to convert the data
-        // into the multipart array structure. Otherwise, we will perform the
-        // request as usual using the form_params with the given parameters.
         if (isset($parameters['file'])) {
             $parameters = $this->multipart($parameters);
         }
@@ -77,7 +78,7 @@ class SaferMeClient implements Client
      * @param array $parameters
      * @return array
      */
-    protected function multipart(array $parameters)
+    protected function multipart($parameters)
     {
         if (! ($file = $parameters['file']) instanceof \SplFileInfo) {
             throw new \InvalidArgumentException('File must be an instance of \SplFileInfo.');
@@ -91,8 +92,8 @@ class SaferMeClient implements Client
     /**
      * Perform a PUT request.
      *
-     * @param       $url
-     * @param array $parameters
+     * @param string $url
+     * @param array  $parameters
      * @return Response
      */
     public function put($url, $parameters = [])
@@ -105,8 +106,8 @@ class SaferMeClient implements Client
     /**
      * Perform a DELETE request.
      *
-     * @param       $url
-     * @param array $parameters
+     * @param string $url
+     * @param array  $parameters
      * @return Response
      */
     public function delete($url, $parameters = [])
@@ -127,17 +128,12 @@ class SaferMeClient implements Client
     {
         $client = $client ?: $this->getClient();
 
-        // We will just execute the given request using the default or given client
-        // and with the passed options wich may contain the query, body vars, or
-        // any other info. Both OK and fail will generate a response object.
         try {
             $response = $client->send($request);
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
         }
-        // As there are a few responses that are supposed to perform the
-        // download of a file, we will filter them. If found, we will
-        // set the file download URL as the response content data.
+
         $body = $response->getHeader('location') ?: json_decode($response->getBody());
 
         return new Response(

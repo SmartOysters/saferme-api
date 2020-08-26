@@ -3,7 +3,6 @@
 namespace SmartOysters\SaferMe\Http;
 
 use SmartOysters\SaferMe\Builder;
-use SmartOysters\SaferMe\Http\Client;
 use SmartOysters\SaferMe\Exception\ResponseException;
 use SmartOysters\SaferMe\Exception\SaferMeException;
 
@@ -16,14 +15,13 @@ use SmartOysters\SaferMe\Exception\SaferMeException;
 class Request
 {
     /**
-     * The Http client instance.
-     *
+     * The Http client instance
      * @var Client
      */
     protected $client;
 
     /**
-     * Request constructor.
+     * Request constructor
      *
      * @param Client $client
      */
@@ -35,15 +33,20 @@ class Request
 
     /**
      * Prepare and run the query
+     *
+     * @param $type
+     * @param $target
+     * @param array $options
+     * @return Response
+     * @throws ResponseException
+     * @throws SaferMeException
      */
     protected function performRequest($type, $target, $options = [])
     {
         $this->builder->setTarget($target);
 
         $endpoint = $this->builder->buildEndpoint($options);
-        // We will first extract the parameters required by the endpoint URI. Once
-        // got, we can create the URI signature replacing those parameters. Any
-        // other info will be part of the query and placed in URL or headers.
+
         $query = $this->builder->getQueryVars($options);
 
         return $this->executeRequest($type, $endpoint, $query);
@@ -51,6 +54,13 @@ class Request
 
     /**
      * Execute the query against the HTTP client.
+     *
+     * @param $type
+     * @param $endpoint
+     * @param array $query
+     * @return Response
+     * @throws ResponseException
+     * @throws SaferMeException
      */
     protected function executeRequest($type, $endpoint, $query = [])
     {
@@ -61,14 +71,16 @@ class Request
 
     /**
      * Handling the server response.
+     *
+     * @param Response $response
+     * @return Response
+     * @throws ResponseException
+     * @throws SaferMeException
      */
     protected function handleResponse(Response $response)
     {
         $content = $response->getContent();
 
-        // If the request did not succeed, we will notify the user via Exception
-        // and include the server error if found. If it is OK and also server
-        // inludes the success variable, we will return the response data.
         if (!isset($content) || !($response->getStatusCode() == 302 || $response->isSuccess())) {
             if ($response->getStatusCode() == 404) {
                 throw new ResponseException($content->error);
@@ -84,18 +96,28 @@ class Request
 
     /**
      * Set the endpoint name.
+     *
+     * @param $resource
+     * @return $this
      */
-    public function setResource(string $resource)
+    public function setResource($resource)
     {
         $this->builder->setResource($resource);
+
+        return $this;
     }
 
     /**
      * Set the token.
+     *
+     * @param $token
+     * @return $this
      */
-    public function setToken(string $token)
+    public function setToken($token)
     {
         $this->builder->setToken($token);
+
+        return $this;
     }
 
     /**
@@ -110,9 +132,6 @@ class Request
         if (in_array($name, ['get', 'post', 'put', 'delete'])) {
             $options = !empty($args[1]) ? $args[1] : [];
 
-            // Will pass the function name as the request type. The second argument
-            // is the URI passed to the method. The third parameter will include
-            // the request option values array which are stored in the index 1.
             return $this->performRequest($name, $args[0], $options);
         }
     }

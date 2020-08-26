@@ -6,7 +6,6 @@ use SmartOysters\SaferMe\Http\SaferMeClient;
 use SmartOysters\SaferMe\Helpers\StringHelpers;
 use SmartOysters\SaferMe\Resources\AlertAreas;
 use SmartOysters\SaferMe\Http\Request;
-use GuzzleHttp\Client as GuzzleClient;
 
 
 /**
@@ -26,60 +25,24 @@ class SaferMe
     /**
      * The API token.
      */
-    protected string $token;
+    protected $token;
 
-    protected string $appId;
+    protected $appId;
 
-    protected int $teamId;
+    protected $teamId;
 
-    protected string $installationId;
-
-    /**
-     * The redirect URL.
-     *
-     * @var string
-     */
-    protected $redirectUrl;
+    protected $installationId;
 
     /**
-     * The OAuth storage.
-     *
-     * @var mixed
+     * Pipedrive constructor
      */
-    protected $storage;
-
-    /**
-     * Pipedrive constructor.
-     *
-     * @param $token
-     */
-    public function __construct($token = '', $uri = 'https://public-api.thundermaps.com/api/v4', string $appId = 'com.thundermaps.main', int $teamId = 1234, string $installationId = '1234abcd')
+    public function __construct($token = '', $uri = 'https://public-api.thundermaps.com/api/v4', $appId = 'com.thundermaps.main', $teamId = 1234, $installationId = '1234abcd')
     {
         $this->token = $token;
         $this->baseURI = $uri;
         $this->appId = $appId;
         $this->teamId = $teamId;
         $this->installationId = $installationId;
-    }
-
-    /**
-     * Get the redirect URL.
-     *
-     * @return string
-     */
-    public function getRedirectUrl()
-    {
-        return $this->redirectUrl;
-    }
-
-    /**
-     * Get the storage instance.
-     *
-     * @return mixed
-     */
-    public function getStorage()
-    {
-        return $this->storage;
     }
 
     /**

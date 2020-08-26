@@ -4,6 +4,13 @@ namespace SmartOysters\SaferMe\Helpers;
 
 trait ArrayHelpers
 {
+    /**
+     * Flatten array
+     *
+     * @param $array
+     * @param $depth
+     * @return array
+     */
     public function arrayFlatten($array, $depth = INF)
     {
         $result = [];
@@ -25,6 +32,13 @@ trait ArrayHelpers
         return $result;
     }
 
+    /**
+     * Exclude keys from an array
+     *
+     * @param array $array
+     * @param array $excludeKeys
+     * @return array
+     */
     public function arrayExclude(array $array, array $excludeKeys)
     {
         foreach($excludeKeys as $key){

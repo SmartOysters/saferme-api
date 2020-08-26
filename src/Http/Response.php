@@ -28,9 +28,9 @@ class Response
     /**
      * Response constructor.
      *
-     * @param       $statusCode
-     * @param       $content
-     * @param array $headers
+     * @param integer $statusCode
+     * @param mixed   $content
+     * @param array   $headers
      */
     public function __construct($statusCode, $content, $headers = [])
     {
