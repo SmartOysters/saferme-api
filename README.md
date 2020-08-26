@@ -37,7 +37,7 @@ $teamId = 1234;
 $installationId = '';
 
 $saferme = new SaferMe($token, $appId, $teamId, $installationId);
-
+```
 
 # Inspiration
 
