@@ -61,4 +61,29 @@ class StringHelpersTest extends TestCase
             [ 'fooBarFozBaz', 'foo_bar_foz_baz', 'Returns corrected string with multiple underscores' ],
         ];
     }
+
+    /**
+     * @dataProvider snakeCaseProvider
+     */
+    public function testSnakeCase($result, $string, $message)
+    {
+        $mockTrait = $this->getMockForTrait(StringHelpers::class);
+
+        $this->assertEquals($result, $mockTrait->snakeCase($string), $message);
+    }
+
+    public function snakeCaseProvider()
+    {
+        return [
+            [ '', null, 'Returns empty when null is passed' ],
+            [ 'foo', 'Foo', 'Returns capital string when same is passed' ],
+            [ 'foobar', 'foobar', 'Returns corrected string when all lower case' ],
+            [ 'foo_bar', 'FooBar', 'Returns corrected string when CapsCase' ],
+            [ 'foo-bar', 'foo-bar', 'Returns same string string with hypenated text' ],
+            [ 'foo_bar_baz', 'fooBarBaz', 'Returns same string with double hyphens' ],
+            [ 'foo_bar', 'foo_bar', 'Returns corrected string with underscores' ],
+            [ 'foo_bar_foz_baz', 'foo_bar_foz_baz', 'Returns corrected string with multiple underscores' ],
+            [ 'foo_bar_foz_baz', 'FooBarFozBaz', 'Returns corrected string with multiple CapsCase' ],
+        ];
+    }
 }
