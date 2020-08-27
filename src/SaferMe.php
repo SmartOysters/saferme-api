@@ -2,14 +2,16 @@
 
 namespace SmartOysters\SaferMe;
 
-use SmartOysters\SaferMe\Http\SaferMeClient;
 use SmartOysters\SaferMe\Helpers\StringHelpers;
-use SmartOysters\SaferMe\Resources\AlertAreas;
+use SmartOysters\SaferMe\Http\SaferMeClient;
 use SmartOysters\SaferMe\Http\Request;
+use SmartOysters\SaferMe\Resources\AlertAreas;
+use SmartOysters\SaferMe\Resources\Channels;
 
 
 /**
  * @method AlertAreas alertAreas()
+ * @method Channels channels()
  */
 class SaferMe
 {
@@ -86,8 +88,6 @@ class SaferMe
     {
         return new SaferMeClient($this->getBaseURI(), $this->token, $this->appId, $this->teamId, $this->installationId);
     }
-
-
 
     /**
      * Get the base URI.
