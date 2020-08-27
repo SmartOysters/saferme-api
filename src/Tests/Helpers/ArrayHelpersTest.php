@@ -56,4 +56,42 @@ class ArrayHelpersTest extends TestCase
         ];
     }
 
+    public function testArraySetNullReplaceValues()
+    {
+        $mockTrait = $this->getMockForTrait(ArrayHelpers::class);
+
+        $array = ['foo' => 'bar'];
+        $expected = ['one', 'two'];
+        $this->assertEquals($expected, $mockTrait->arraySet($array, null, $expected), '->arraySet() replaces array when null passed as key');
+    }
+
+    public function testArraySetSingleKey()
+    {
+        $mockTrait = $this->getMockForTrait(ArrayHelpers::class);
+
+        $array = ['foo' => 'bar'];
+        $expected = ['one', 'two'];
+
+        $this->assertEquals(['foo' => $expected], $mockTrait->arraySet($array, 'foo', $expected), '->arraySet() replaces array when null passed as key');
+    }
+
+    public function testArraySetTwoKeys()
+    {
+        $mockTrait = $this->getMockForTrait(ArrayHelpers::class);
+
+        $array = ['foo' => 'bar', 'bar' => 'foo', 'baz' => 'catz'];
+        $expected = ['one', 'two'];
+
+        $this->assertEquals(['baz' => $expected], $mockTrait->arraySet($array, 'foo.baz', $expected), '->arraySet() last object of the dot notation is key');
+    }
+
+    public function testArraySetTwoKeysNested()
+    {
+        $mockTrait = $this->getMockForTrait(ArrayHelpers::class);
+
+        $array = ['foo' => ['bar' => 'foo', 'baz' => 'catz']];
+        $expected = ['one', 'two', 'three'];
+
+        $this->assertEquals(['bar' => 'foo', 'baz' => $expected], $mockTrait->arraySet($array, 'foo.baz', $expected), '->arraySet() nested array set in correct key');
+    }
 }

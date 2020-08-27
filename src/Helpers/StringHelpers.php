@@ -16,4 +16,15 @@ trait StringHelpers
 
         return str_replace(' ', '', $value);
     }
+
+    /**
+     * String becomes camelCase
+     *
+     * @param $value
+     * @return string|string[]
+     */
+    public function camelCase($value)
+    {
+        return lcfirst($this->capsCase($value));
+    }
 }
