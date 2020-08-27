@@ -48,7 +48,7 @@ class Response
             return false;
         }
 
-        return $this->getContent()->success;
+        return $this->getContent();
     }
 
     /**
@@ -56,20 +56,8 @@ class Response
      */
     public function getData()
     {
-        if ($this->isSuccess() && isset($this->getContent()->data)) {
-            return $this->getContent()->data;
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the additional data array if any.
-     */
-    public function getAdditionalData()
-    {
-        if ($this->isSuccess() && isset($this->getContent()->additional_data)) {
-            return $this->getContent()->additional_data;
+        if ($this->isSuccess() && !empty($this->getContent())) {
+            return $this->getContent();
         }
 
         return null;

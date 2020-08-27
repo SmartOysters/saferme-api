@@ -36,7 +36,7 @@ class SaferMe
     /**
      * Pipedrive constructor
      */
-    public function __construct($token = '', $uri = 'https://public-api.thundermaps.com/api/v4', $appId = 'com.thundermaps.main', $teamId = 1234, $installationId = '1234abcd')
+    public function __construct($token = '', $uri = 'https://public-api.thundermaps.com/api/v4/', $appId = 'com.thundermaps.main', $teamId = 1234, $installationId = '1234abcd')
     {
         $this->token = $token;
         $this->baseURI = $uri;

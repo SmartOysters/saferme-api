@@ -82,7 +82,7 @@ class Request
         $content = $response->getContent();
 
         if (!isset($content) || !($response->getStatusCode() == 302 || $response->isSuccess())) {
-            if ($response->getStatusCode() == 404) {
+            if (in_array($response->getStatusCode(), [400, 403, 404, 410])) {
                 throw new ResponseException($content->error);
             }
 

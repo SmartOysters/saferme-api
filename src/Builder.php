@@ -93,7 +93,8 @@ class Builder
         $result = $this->getTarget();
 
         if (!empty($this->getResource())) {
-            $result = $this->getResource() . '/' . $result;
+            $follow = (!empty($result)) ? '/'. $result : '';
+            $result = $this->getResource() . $follow;
         }
 
         return $result;

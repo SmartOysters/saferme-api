@@ -3,12 +3,14 @@
 namespace SmartOysters\SaferMe\Http;
 
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Post\PostFile;
-use GuzzleHttp\Message\Request as GuzzleRequest;
+use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use GuzzleHttp\Exception\BadResponseException;
+use SmartOysters\SaferMe\Helpers\ArrayHelpers;
 
 class SaferMeClient implements Client
 {
+    use ArrayHelpers;
+
     /**
      * The Guzzle client instance.
      * @var GuzzleClient
@@ -29,7 +31,7 @@ class SaferMeClient implements Client
     {
         $this->client = new GuzzleClient(
             [
-                'base_url' => $url,
+                'base_uri' => $url,
                 'headers' => [
                     'Authorization' => "Token token=$token",
                     'X-AppId' => $appId,
@@ -49,27 +51,30 @@ class SaferMeClient implements Client
      */
     public function get($url, $parameters = [])
     {
-        $request = $this->getClient()->createRequest('GET', $url, ['query' => $parameters]);
-
-        return $this->execute($request);
+        return $this->execute(new GuzzleRequest('GET', $url));
     }
 
     /**
      * Perform a POST request.
      *
-     * @param string $url
-     * @param array  $parameters
+     * @param $url
+     * @param array $parameters
      * @return Response
      */
     public function post($url, $parameters = [])
     {
+        $request = new GuzzleRequest('POST', $url);
+        $form = 'form_params';
+
+        // If any file key is found, we will assume we have to convert the data
+        // into the multipart array structure. Otherwise, we will perform the
+        // request as usual using the form_params with the given parameters.
         if (isset($parameters['file'])) {
+            $form = 'multipart';
             $parameters = $this->multipart($parameters);
         }
 
-        $request = $this->getClient()->createRequest('POST', $url, ['body' => $parameters]);
-
-        return $this->execute($request);
+        return $this->execute($request, [$form => $parameters]);
     }
 
     /**
@@ -78,50 +83,59 @@ class SaferMeClient implements Client
      * @param array $parameters
      * @return array
      */
-    protected function multipart($parameters)
+    protected function multipart(array $parameters)
     {
         if (! ($file = $parameters['file']) instanceof \SplFileInfo) {
             throw new \InvalidArgumentException('File must be an instance of \SplFileInfo.');
         }
 
-        $parameters['file'] = new PostFile('file', file_get_contents($file->getPathname()), $file->getFilename());
+        $result = [];
+        $content = file_get_contents($file->getPathname());
 
-        return $parameters;
+        foreach ($this->arrayExclude($parameters, 'file') as $key => $value) {
+            $result[] = ['name' => $key, 'contents' => (string) $value];
+        }
+        // Will convert every element of the array into a format accepted by the
+        // multipart encoding standards. It will also add a special item which
+        // includes the file key name, the content of the file and its name.
+        $result[] = ['name' => 'file', 'contents' => $content, 'filename' => $file->getFilename()];
+
+        return $result;
     }
 
     /**
      * Perform a PUT request.
      *
-     * @param string $url
-     * @param array  $parameters
+     * @param       $url
+     * @param array $parameters
      * @return Response
      */
     public function put($url, $parameters = [])
     {
-        $request = $this->getClient()->createRequest('PUT', $url, ['body' => $parameters]);
+        $request = new GuzzleRequest('PUT', $url);
 
-        return $this->execute($request);
+        return $this->execute($request, ['form_params' => $parameters]);
     }
 
     /**
      * Perform a DELETE request.
      *
-     * @param string $url
-     * @param array  $parameters
+     * @param       $url
+     * @param array $parameters
      * @return Response
      */
     public function delete($url, $parameters = [])
     {
-        $request = $this->getClient()->createRequest('DELETE', $url, ['body' => $parameters]);
+        $request = new GuzzleRequest('DELETE', $url);
 
-        return $this->execute($request);
+        return $this->execute($request, ['form_params' => $parameters]);
     }
 
     /**
      * Execute the request and returns the Response object.
      *
-     * @param GuzzleRequest $request
-     * @param null $client
+     * @param GuzzleRequest     $request
+     * @param GuzzleClient|null $client
      * @return Response
      */
     protected function execute(GuzzleRequest $request, $client = null)
