@@ -114,7 +114,7 @@ abstract class Resource
     {
         $reflection = new ReflectionClass($this);
 
-        return $this->camelCase($reflection->getShortName());
+        return $this->snakeCase($reflection->getShortName());
     }
 
     /**

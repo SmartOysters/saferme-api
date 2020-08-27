@@ -59,11 +59,11 @@ class ResourceTest extends TestCase
         $this->assertFalse($resource->isEnabled('delete'), 'Delete endpoint is disabled');
 
         $this->expectException(SaferMeException::class);
-        $this->expectExceptionMessage('The method update() is not available for the resource testResource');
+        $this->expectExceptionMessage('The method update() is not available for the resource test_resource');
         $resource->__call('update', ['id', []]);
 
         $this->expectException(SaferMeException::class);
-        $this->expectExceptionMessage('The method create() is not available for the resource testResource');
+        $this->expectExceptionMessage('The method create() is not available for the resource test_resource');
         $resource->__call('create', [[]]);
     }
 
@@ -84,11 +84,11 @@ class ResourceTest extends TestCase
         $this->assertTrue($resource->isEnabled('delete'), 'Delete endpoint is disabled');
 
         $this->expectException(SaferMeException::class);
-        $this->expectExceptionMessage('The method list() is not available for the resource testResource');
+        $this->expectExceptionMessage('The method list() is not available for the resource test_resource');
         $resource->__call('list', [[]]);
 
         $this->expectException(SaferMeException::class);
-        $this->expectExceptionMessage('The method fetch() is not available for the resource testResource');
+        $this->expectExceptionMessage('The method fetch() is not available for the resource test_resource');
         $resource->__call('fetch', ['id']);
     }
 }
