@@ -2,9 +2,10 @@
 
 namespace SmartOysters\SaferMe\Resources;
 
+use SmartOysters\SaferMe\Resources\Base\Resource;
 use SmartOysters\SaferMe\Response;
 
-class AlertAreas
+class AlertAreas extends Resource
 {
     /**
      * Get the alert areas
