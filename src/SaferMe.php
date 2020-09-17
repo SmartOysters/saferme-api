@@ -50,6 +50,19 @@ class SaferMe
     }
 
     /**
+     * Reset the TeamID in the header
+     *
+     * @param int $id
+     * @return $this
+     */
+    public function team(int $id): self
+    {
+        $this->teamId = $id;
+
+        return $this;
+    }
+
+    /**
      * Get the resource instance.
      *
      * @param $resource

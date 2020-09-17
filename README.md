@@ -31,6 +31,7 @@ Or simply add it to your composer.json dependences and run `composer update`:
 Following details provided on the [authentication](https://github.com/SaferMe/saferme-api-docs/blob/master/005_authentication.md) doc page.
 
 `$installationId` is requested to be `something-unique-for-this-client-this-app-and-this-api-key`. We generated this value at [random.org](https://www.random.org/strings/?num=10&len=20&digits=on&upperalpha=on&loweralpha=on&unique=on&format=html&rnd=new), and select one of the generated keys, and use that in the integration.
+`$teamId` is set to extract information from an Organisation within SaferMe.
 
 ```php
 $token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx';
@@ -40,6 +41,21 @@ $installationId = '';
 
 $saferme = new SaferMe($token, $appId, $teamId, $installationId);
 ```
+
+## Teams
+
+If you are using this Client to access multiple teams, you can configure to inject a single team in the Constructor, and reference another team in with `->team()` function before calling your endpoint.
+
+```php
+// As above
+$saferme = new SaferMe($token, $appId, $teamId, $installationId);
+
+$teamId = 4321;
+
+$saferme->team($teamId)->channels()->list();
+```
+
+
 
 # Inspiration
 
