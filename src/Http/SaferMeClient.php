@@ -29,9 +29,12 @@ class SaferMeClient implements Client
      */
     public function __construct($url, $token, $appId = 'com.thundermaps.main', $teamId = 1234, $installationId = '')
     {
+        list($headers, $query) = [[], []];
+
         $this->client = new GuzzleClient(
             [
                 'base_uri' => $url,
+                'query'    => $query,
                 'headers' => [
                     'Authorization' => "Token token=$token",
                     'X-AppId' => $appId,
@@ -51,7 +54,14 @@ class SaferMeClient implements Client
      */
     public function get($url, $parameters = [])
     {
-        return $this->execute(new GuzzleRequest('GET', $url));
+        $options = $this->getClient()
+            ->getConfig();
+        $this->arraySet($options, 'query', array_merge($parameters, $options['query']));
+
+        // For this particular case we have to include the parameters into the
+        // URL query. Merging the request default query configuration to the
+        // request parameters will make the query key contain everything.
+        return $this->execute(new GuzzleRequest('GET', $url), $options);
     }
 
     /**
@@ -138,12 +148,12 @@ class SaferMeClient implements Client
      * @param GuzzleClient|null $client
      * @return Response
      */
-    protected function execute(GuzzleRequest $request, $client = null)
+    protected function execute(GuzzleRequest $request, array $options = [], $client = null)
     {
         $client = $client ?: $this->getClient();
 
         try {
-            $response = $client->send($request);
+            $response = $client->send($request, $options);
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
         }
