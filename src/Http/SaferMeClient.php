@@ -21,28 +21,27 @@ class SaferMeClient implements Client
 
     /**
      * SaferMeClient constructor.
-     * @param string $url
-     * @param string $token
-     * @param string $appId
-     * @param int    $teamId
-     * @param string $installationId
+     * @param string    $url
+     * @param string    $token
+     * @param string    $appId
+     * @param int|null  $teamId
+     * @param string    $installationId
      */
-    public function __construct($url, $token, $appId = 'com.thundermaps.main', $teamId = 1234, $installationId = '')
+    public function __construct($url, $token, $appId = 'com.thundermaps.main', $teamId = null, $installationId = '')
     {
         list($headers, $query) = [[], []];
 
-        $this->client = new GuzzleClient(
-            [
-                'base_uri' => $url,
-                'query'    => $query,
-                'headers' => [
-                    'Authorization' => "Token token=$token",
-                    'X-AppId' => $appId,
-                    'X-TeamId' => $teamId,
-                    'X-InstallationId' => $installationId
-                ]
-            ]
-        );
+        $headers = array_merge([
+            'Authorization' => "Token token=$token",
+            'X-AppId' => $appId,
+            'X-InstallationId' => $installationId
+        ], ((!is_null($teamId)) ? ['X-TeamId' => $teamId] : []));
+
+        $this->client = new GuzzleClient([
+            'base_uri' => $url,
+            'query'    => $query,
+            'headers'  => $headers
+        ]);
     }
 
     /**
