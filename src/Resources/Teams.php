@@ -36,10 +36,10 @@ class Teams extends Resource
      * @param array $options
      * @return Response
      */
-    public function bulk_create($team_id, $payload, $options = [])
+    public function bulk_create($team_id, $data, $options = [])
     {
         $options = array_merge(
-            compact('team_id', 'payload'),
+            compact('team_id', 'data'),
             $options
         );
 

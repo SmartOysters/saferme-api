@@ -74,16 +74,19 @@ class SaferMeClient implements Client
     {
         $request = new GuzzleRequest('POST', $url);
         $form = 'form_params';
+        $data = $parameters['data'];
 
         // If any file key is found, we will assume we have to convert the data
         // into the multipart array structure. Otherwise, we will perform the
         // request as usual using the form_params with the given parameters.
         if (isset($parameters['file'])) {
             $form = 'multipart';
-            $parameters = $this->multipart($parameters);
+            $data = $this->multipart($parameters);
+        } else {
+            $form = 'json';
         }
 
-        return $this->execute($request, [$form => $parameters]);
+        return $this->execute($request, [$form => $data]);
     }
 
     /**
