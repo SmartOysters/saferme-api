@@ -55,9 +55,9 @@ class Request
     /**
      * Execute the query against the HTTP client.
      *
-     * @param $type
-     * @param $endpoint
-     * @param array $query
+     * @param string $type
+     * @param string $endpoint
+     * @param array  $query
      * @return Response
      * @throws ResponseException
      * @throws SaferMeException
