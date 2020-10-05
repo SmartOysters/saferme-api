@@ -7,12 +7,14 @@ use SmartOysters\SaferMe\Http\SaferMeClient;
 use SmartOysters\SaferMe\Http\Request;
 use SmartOysters\SaferMe\Resources\AlertAreas;
 use SmartOysters\SaferMe\Resources\Channels;
+use SmartOysters\SaferMe\Resources\Reports;
 use SmartOysters\SaferMe\Resources\Teams;
 
 
 /**
  * @method AlertAreas alertAreas()
  * @method Channels channels()
+ * @method Reports reports()
  * @method Teams teams()
  */
 class SaferMe
