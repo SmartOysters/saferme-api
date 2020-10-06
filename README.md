@@ -55,7 +55,20 @@ $teamId = 4321;
 $saferme->team($teamId)->channels()->list();
 ```
 
+## Guzzle Client Options
 
+The options value in the constructor allows configuration for the [Guzzle Client](https://github.com/guzzle/guzzle/blob/master/src/Client.php#L27) to  set any number of default request options.
+
+```php
+
+$options = [
+    'timeout'         => 0,
+    'allow_redirects' => false,
+    'proxy'           => '192.168.16.1:10'
+];
+
+$saferme = new SaferMe($token, $appId, $teamId, $installationId, $options);
+```
 
 # Inspiration
 

@@ -30,25 +30,44 @@ class SaferMe
 
     /**
      * The API token.
+     *
+     * @var string
      */
     protected $token;
 
+    /**
+     * @var mixed|string
+     */
     protected $appId;
 
+    /**
+     * @var int|mixed
+     */
     protected $teamId;
 
+    /**
+     * @var mixed|string
+     */
     protected $installationId;
 
     /**
-     * Pipedrive constructor
+     * Guzzle Client configuration options
+     *
+     * @var array|mixed
      */
-    public function __construct($token = '', $uri = 'https://public-api.thundermaps.com/api/v4/', $appId = 'com.thundermaps.main', $teamId = 1234, $installationId = '1234abcd')
+    protected $options;
+
+    /**
+     * SaferMe constructor
+     */
+    public function __construct($token = '', $uri = 'https://public-api.thundermaps.com/api/v4/', $appId = 'com.thundermaps.main', $teamId = 1234, $installationId = '1234abcd', $options = [])
     {
         $this->token = $token;
         $this->baseURI = $uri;
         $this->appId = $appId;
         $this->teamId = $teamId;
         $this->installationId = $installationId;
+        $this->options = $options;
     }
 
     /**
@@ -103,7 +122,7 @@ class SaferMe
      */
     protected function getClient()
     {
-        return new SaferMeClient($this->getBaseURI(), $this->token, $this->appId, $this->teamId, $this->installationId);
+        return new SaferMeClient($this->getBaseURI(), $this->token, $this->appId, $this->teamId, $this->installationId, $this->options);
     }
 
     /**
