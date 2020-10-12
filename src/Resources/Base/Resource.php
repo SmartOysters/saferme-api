@@ -77,7 +77,7 @@ abstract class Resource
      */
     public function create(array $values)
     {
-        return $this->request->post('', $values);
+        return $this->request->post('', ['data' => $values]);
     }
 
     /**
