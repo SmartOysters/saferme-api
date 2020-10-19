@@ -45,4 +45,15 @@ class Channels extends Resource
     {
         return $this->request->get(':channel_id/categories/:category_id', compact('channel_id', 'category_id'));
     }
+
+    /**
+     * Fetch the Report States for a specific channel.
+     *
+     * @param int $channel_id Entity ID to Report States for
+     * @return Response
+     */
+    public function report_states($channel_id)
+    {
+        return $this->request->get(':channel_id/report_states', compact('channel_id'));
+    }
 }
