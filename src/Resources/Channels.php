@@ -56,4 +56,45 @@ class Channels extends Resource
     {
         return $this->request->get(':channel_id/report_states', compact('channel_id'));
     }
+
+    /**
+     * Return list of Users for each Channel
+     *
+     * @param $channel_id
+     * @return Response
+     */
+    public function users($channel_id)
+    {
+        return $this->request->get(':channel_id/users', compact('channel_id'));
+    }
+
+    /**
+     * Return User information from within a Channel
+     *
+     * @param $channel_id
+     * @param $user_id
+     * @return Response
+     */
+    public function user($channel_id, $user_id)
+    {
+        return $this->request->get(':channel_id/users/:user_id', compact('channel_id', 'user_id'));
+    }
+
+    /**
+     * Return Reports for each Channel
+     *
+     * @param $channel_id
+     * @param string $fields
+     * @param array $options
+     * @return Response
+     */
+    public function reports($channel_id, $fields = '', $options = [])
+    {
+        $options = array_merge(
+            compact('channel_id', 'fields'),
+            $options
+        );
+
+        return $this->request->get(':channel_id/reports', $options);
+    }
 }

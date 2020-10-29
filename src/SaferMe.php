@@ -6,15 +6,19 @@ use SmartOysters\SaferMe\Helpers\StringHelpers;
 use SmartOysters\SaferMe\Http\SaferMeClient;
 use SmartOysters\SaferMe\Http\Request;
 use SmartOysters\SaferMe\Resources\AlertAreas;
+use SmartOysters\SaferMe\Resources\Analytics;
 use SmartOysters\SaferMe\Resources\Channels;
 use SmartOysters\SaferMe\Resources\Reports;
+use SmartOysters\SaferMe\Resources\ReportSearch;
 use SmartOysters\SaferMe\Resources\Teams;
 
 
 /**
  * @method AlertAreas alertAreas()
+ * @method Analytics analytics()
  * @method Channels channels()
  * @method Reports reports()
+ * @method ReportSearch reportSearch()
  * @method Teams teams()
  */
 class SaferMe
