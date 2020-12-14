@@ -91,7 +91,7 @@ abstract class Resource
     {
         $this->arraySet($values, 'id', $id);
 
-        return $this->request->put(':id', $values);
+        return $this->request->patch(':id', $values);
     }
 
     /**
