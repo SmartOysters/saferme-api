@@ -36,7 +36,7 @@ class Channels extends Resource
     }
 
     /**
-     * Fetch the entity details by ID.
+     * Fetch the channel with the Root Category ID.
      *
      * @param int $channel_id Entity ID to find.
      * @return Response
@@ -44,6 +44,23 @@ class Channels extends Resource
     public function category($channel_id, $category_id)
     {
         return $this->request->get(':channel_id/categories/:category_id', compact('channel_id', 'category_id'));
+    }
+
+    /**
+     * Updating a channel with the Root Category ID.
+     *
+     * @param int    $channel_id  Entity ID to find.
+     * @param int    $category_id Root Category ID seen when creating channel
+     * @param string $fields      Fields to update
+     * @param array  $options
+     */
+    public function update_channel($channel_id, $category_id, $fields = '', $options = [])
+    {
+        $options = array_merge(
+            compact('channel_id', 'category_id', 'fields'),
+            $options
+        );
+        return $this->request->patch(':channel_id/categories/:category_id', $options);
     }
 
     /**
