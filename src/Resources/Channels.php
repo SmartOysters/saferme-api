@@ -58,8 +58,7 @@ class Channels extends Resource
     {
         $options = array_merge(
             compact('channel_id', 'category_id'),
-            $fields,
-            $options
+            $fields, $options
         );
 
         return $this->request->patch(':channel_id/categories/:category_id', $options);
