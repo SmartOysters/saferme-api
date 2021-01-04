@@ -94,12 +94,12 @@ class Channels extends Resource
     /**
      * Add new Report States for a specific channel.
      *
-     * @param int    $channel_id Channel ID that Report State is connected to
-     * @param string $data
-     * @param array  $options
+     * @param int   $channel_id Channel ID that Report State is connected to
+     * @param array $data
+     * @param array $options
      * @return Response
      */
-    public function add_report_state($channel_id, $data = '', $options = [])
+    public function add_report_state($channel_id, $data = [], $options = [])
     {
         $options = array_merge(
             compact('channel_id', 'data'),
@@ -112,17 +112,17 @@ class Channels extends Resource
     /**
      * Update a Report State for a channel
      *
-     * @param int    $channel_id     Channel ID that Report State is connected to
-     * @param int    $reportstate_id Report State to update
-     * @param string $data
-     * @param array  $options
+     * @param int   $channel_id     Channel ID that Report State is connected to
+     * @param int   $reportstate_id Report State to update
+     * @param array $fields
+     * @param array $options
      * @return Response
      */
-    public function update_report_state($channel_id, $reportstate_id, $data = '', $options = [])
+    public function update_report_state($channel_id, $reportstate_id, $fields = [], $options = [])
     {
         $options = array_merge(
-            compact('channel_id', 'reportstate_id', 'data'),
-            $options
+            compact('channel_id', 'reportstate_id'),
+            $fields, $options
         );
 
         return $this->request->patch(':channel_id/report_states/:reportstate_id', $options);
