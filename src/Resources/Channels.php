@@ -36,6 +36,22 @@ class Channels extends Resource
     }
 
     /**
+     * @param int    $channel_id  Entity ID of the channel id
+     * @param string $fields      Fields to send data to
+     * @param array  $options
+     * @return Response
+     */
+    public function add_category($channel_id, $fields = '', $options = [])
+    {
+        $options = array_merge(
+            compact('channel_id'),
+            $fields, $options
+        );
+
+        return $this->request->post(':channel_id/categories', $options);
+    }
+
+    /**
      * Fetch the channel with the Root Category ID.
      *
      * @param int $channel_id Entity ID to find.
@@ -73,6 +89,57 @@ class Channels extends Resource
     public function report_states($channel_id)
     {
         return $this->request->get(':channel_id/report_states', compact('channel_id'));
+    }
+
+    /**
+     * Add new Report States for a specific channel.
+     *
+     * @param int    $channel_id Channel ID that Report State is connected to
+     * @param string $data
+     * @param array  $options
+     * @return Response
+     */
+    public function add_report_state($channel_id, $data = '', $options = [])
+    {
+        $options = array_merge(
+            compact('channel_id', 'data'),
+            $options
+        );
+
+        return $this->request->post(':channel_id/report_states', $options);
+    }
+
+    /**
+     * Update a Report State for a channel
+     *
+     * @param int    $channel_id     Channel ID that Report State is connected to
+     * @param int    $reportstate_id Report State to update
+     * @param string $data
+     * @param array  $options
+     * @return Response
+     */
+    public function update_report_state($channel_id, $reportstate_id, $data = '', $options = [])
+    {
+        $options = array_merge(
+            compact('channel_id', 'reportstate_id', 'data'),
+            $options
+        );
+
+        return $this->request->patch(':channel_id/report_states/:reportstate_id', $options);
+    }
+
+    /**
+     * Delete a Report State
+     *
+     * @param $channel_id
+     * @param $reportstate_id
+     * @return Response
+     */
+    public function delete_report_state($channel_id, $reportstate_id)
+    {
+        $options = compact('channel_id', 'reportstate_id');
+
+        return $this->request->delete(':channel_id/report_states/:reportstate_id', $options);
     }
 
     /**
