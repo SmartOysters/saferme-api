@@ -5,6 +5,7 @@ namespace SmartOysters\SaferMe\Http;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\ConnectException;
 use SmartOysters\SaferMe\Helpers\ArrayHelpers;
 
 class SaferMeClient implements Client
@@ -174,6 +175,10 @@ class SaferMeClient implements Client
             $response = $client->send($request, $options);
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
+        } catch (ConnectException $e) {
+            $response = new \GuzzleHttp\Psr7\Response(
+                502, [], json_encode(['error' => $e->getMessage()])
+            );
         }
 
         $body = $response->getHeader('location') ?: json_decode($response->getBody());

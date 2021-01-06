@@ -48,6 +48,10 @@ class Response
             return false;
         }
 
+        if (!in_array($this->statusCode, [200,201,202,204,206])) {
+            return false;
+        }
+
         return $this->getContent();
     }
 

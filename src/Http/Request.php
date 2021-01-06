@@ -88,7 +88,8 @@ class Request
             }
 
             throw new SaferMeException(
-                isset($content->error) ? $content->error : "Error unknown."
+                isset($content->error) ? $content->error : "Error unknown.",
+                $response->getStatusCode()
             );
         }
 
