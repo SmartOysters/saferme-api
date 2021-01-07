@@ -127,9 +127,15 @@ class SaferMeClient implements Client
      */
     public function put($url, $parameters = [])
     {
+        $form = 'form_params';
         $request = new GuzzleRequest('PUT', $url);
 
-        return $this->execute($request, ['form_params' => $parameters]);
+        if (isset($parameters['submit_type'])) {
+            $form = $parameters['submit_type'];
+            unset($parameters['submit_type']);
+        }
+
+        return $this->execute($request, [$form => $parameters]);
     }
 
     /**
@@ -181,7 +187,16 @@ class SaferMeClient implements Client
             );
         }
 
-        $body = $response->getHeader('location') ?: json_decode($response->getBody());
+        if (in_array($response->getStatusCode(), [400,401,403]) && array_key_exists('X-Status-Reason', $response->getHeaders())) {
+            $body = array_merge(
+                json_decode($response->getBody(), true),
+                ['errors' => $response->getHeader('X-Status-Reason')]
+            );
+        } elseif ($response->getHeader('location')) {
+            $body = $response->getHeader('location');
+        } else {
+            $body = json_decode($response->getBody());
+        }
 
         return new Response(
             $response->getStatusCode(), $body, $response->getHeaders()

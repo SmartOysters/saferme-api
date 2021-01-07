@@ -131,8 +131,8 @@ class Channels extends Resource
     /**
      * Delete a Report State
      *
-     * @param $channel_id
-     * @param $reportstate_id
+     * @param int   $channel_id     Channel ID
+     * @param int   $reportstate_id Report State
      * @return Response
      */
     public function delete_report_state($channel_id, $reportstate_id)
@@ -140,6 +140,36 @@ class Channels extends Resource
         $options = compact('channel_id', 'reportstate_id');
 
         return $this->request->delete(':channel_id/report_states/:reportstate_id', $options);
+    }
+
+    /**
+     * Display the form for the related channel
+     *
+     * @param int $channel_id Channel ID
+     * @return Response
+     */
+    public function get_form($channel_id)
+    {
+        return $this->request->get(':channel_id/form', compact('channel_id'));
+    }
+
+    /**
+     * Update the Form for a Channel
+     *
+     * @param int   $channel_id Channel ID
+     * @param array $fields
+     * @param array $options
+     * @return Response
+     */
+    public function update_form($channel_id, $fields = [], $options = [])
+    {
+        $options = array_merge(
+            compact('channel_id'),
+            $fields, $options,
+            ['submit_type' => 'json']
+        );
+
+        return $this->request->put(':channel_id/form', $options);
     }
 
     /**
