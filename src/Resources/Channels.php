@@ -37,15 +37,15 @@ class Channels extends Resource
 
     /**
      * @param int    $channel_id  Entity ID of the channel id
-     * @param string $fields      Fields to send data to
+     * @param string $data        Fields to send data to
      * @param array  $options
      * @return Response
      */
-    public function add_category($channel_id, $fields = '', $options = [])
+    public function add_category($channel_id, $data = '', $options = [])
     {
         $options = array_merge(
-            compact('channel_id'),
-            $fields, $options
+            compact('channel_id', 'data'),
+            $options
         );
 
         return $this->request->post(':channel_id/categories', $options);
