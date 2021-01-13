@@ -84,7 +84,13 @@ class Request
 
         if (!isset($content) || !($response->getStatusCode() == 302 || $response->isSuccess())) {
             if (in_array($response->getStatusCode(), [400, 403, 404, 410])) {
-                throw new ResponseException($content->error);
+                $response = new ResponseException(
+                    (isset($content->description) ? $content->description : "Error unknown."),
+                    $response->getStatusCode()
+                );
+                $response->setResponse($content);
+
+                throw $response;
             }
 
             throw new SaferMeException(
