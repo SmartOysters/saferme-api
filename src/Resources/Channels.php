@@ -55,16 +55,16 @@ class Channels extends Resource
     /**
      * Updating a channel with the Root Category ID.
      *
-     * @param int    $channel_id  Entity ID to find.
-     * @param int    $category_id Root Category ID seen when creating channel
-     * @param string $fields      Fields to update
-     * @param array  $options
+     * @param int   $channel_id  Entity ID to find.
+     * @param int   $category_id Root Category ID seen when creating channel
+     * @param array $data        Fields to update
+     * @param array $options
      */
-    public function update_channel($channel_id, $category_id, $fields = '', $options = [])
+    public function update_channel($channel_id, $category_id, $data = [], $options = [])
     {
         $options = array_merge(
-            compact('channel_id', 'category_id'),
-            $fields, $options
+            compact('channel_id', 'category_id', 'data'),
+            $options
         );
 
         return $this->request->patch(':channel_id/categories/:category_id', $options);
