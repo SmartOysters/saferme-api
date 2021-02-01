@@ -27,6 +27,26 @@ class Teams extends Resource
     }
 
     /**
+     * Show a User from the TeamUsers.
+     *
+     * @link https://github.com/SaferMe/saferme-api-docs/blob/doc-tweaks/125_team_users.md#fetch-a-team-user
+     *
+     * @param int   $team_id Entity ID interact with.
+     * @param int   $user_id User ID.
+     * @param array $options
+     * @return Response
+     */
+    public function show_team_user($team_id, $user_id, $query = '', $options = [])
+    {
+        $options = array_merge(
+            compact('team_id', 'user_id', 'query'),
+            $options
+        );
+
+        return $this->request->get(':team_id/team_users/:user_id', $options);
+    }
+
+    /**
      * Create TeamUsers for a team.
      *
      * @link https://github.com/SaferMe/saferme-api-docs/blob/teams/120_team.md#bulk-add-users-to-a-team
