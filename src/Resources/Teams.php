@@ -31,15 +31,16 @@ class Teams extends Resource
      *
      * @link https://github.com/SaferMe/saferme-api-docs/blob/doc-tweaks/125_team_users.md#fetch-a-team-user
      *
-     * @param int   $team_id Entity ID interact with.
-     * @param int   $user_id User ID.
-     * @param array $options
+     * @param int    $team_id Entity ID interact with.
+     * @param int    $user_id User ID.
+     * @param string $fields  Array of fields to return in result
+     * @param array  $options
      * @return Response
      */
-    public function show_team_user($team_id, $user_id, $query = '', $options = [])
+    public function show_team_user($team_id, $user_id, $fields = '', $options = [])
     {
         $options = array_merge(
-            compact('team_id', 'user_id', 'query'),
+            compact('team_id', 'user_id', 'fields'),
             $options
         );
 
