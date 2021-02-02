@@ -39,7 +39,9 @@ matrix:
 
             # Latest commit to master
         - php: 7.4
-          env: STABILITY="dev" COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+          env:
+            - STABILITY="dev" COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+            - XDEBUG_MODE="coverage"
 
     allow_failures:
         # Dev-master is allowed to fail.
