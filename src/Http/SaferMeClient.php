@@ -187,11 +187,13 @@ class SaferMeClient implements Client
             );
         }
 
-        if (in_array($response->getStatusCode(), [400,401,403]) && array_key_exists('X-Status-Reason', $response->getHeaders())) {
+        if (in_array($response->getStatusCode(), [400,401,403,422]) && array_key_exists('X-Status-Reason', $response->getHeaders())) {
             $body = array_merge(
                 json_decode($response->getBody(), true),
                 ['errors' => $response->getHeader('X-Status-Reason')]
             );
+        } elseif (in_array($response->getStatusCode(), [422]) ) {
+            $body = json_decode($response->getBody()->getContents(), true);
         } elseif ($response->getHeader('location')) {
             $body = $response->getHeader('location');
         } else {

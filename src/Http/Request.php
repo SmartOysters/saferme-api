@@ -83,14 +83,18 @@ class Request
         $content = $response->getContent();
 
         if (!isset($content) || !($response->getStatusCode() == 302 || $response->isSuccess())) {
-            if (in_array($response->getStatusCode(), [400, 403, 404, 410])) {
-                $response = new ResponseException(
-                    (isset($content->description) ? $content->description : "Error unknown."),
+            if (in_array($response->getStatusCode(), [400, 403, 404, 410, 422])) {
+                // Set Specific error Message for form submission
+                if ($response->getStatusCode() === 422) {
+                    $content = 'Form Validation Error';
+                }
+                $responseException = new ResponseException(
+                    (isset($content) ? $content : "Error unknown."),
                     $response->getStatusCode()
                 );
-                $response->setResponse($content);
+                $responseException->setResponse($response);
 
-                throw $response;
+                throw $responseException;
             }
 
             throw new SaferMeException(
