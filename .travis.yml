@@ -35,7 +35,9 @@ matrix:
 
             # Test the latest stable release
         - php: 7.4
-          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+          env:
+            - COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+            - XDEBUG_MODE="coverage"
 
             # Latest commit to master
         - php: 7.4
