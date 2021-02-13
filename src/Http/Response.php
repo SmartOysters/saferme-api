@@ -44,15 +44,11 @@ class Response
      */
     public function isSuccess()
     {
-        if (! $this->getContent()) {
-            return false;
+        if (in_array($this->statusCode, [200,201,202,204,206,302])) {
+            return true;
         }
 
-        if (!in_array($this->statusCode, [200,201,202,204,206])) {
-            return false;
-        }
-
-        return $this->getContent();
+        return false;
     }
 
     /**

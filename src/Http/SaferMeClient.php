@@ -197,7 +197,7 @@ class SaferMeClient implements Client
         } elseif ($response->getHeader('location')) {
             $body = $response->getHeader('location');
         } else {
-            $body = json_decode($response->getBody());
+            $body = json_decode($rRequestTestesponse->getBody());
         }
 
         return new Response(

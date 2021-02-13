@@ -37,7 +37,7 @@ class RequestTest extends TestCase
         $mockResponse->expects($this->exactly(2))
             ->method('isSuccess')
             ->willReturn(true);
-        $mockResponse->expects($this->exactly(2))
+        $mockResponse->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(200);
         $mockResponse->expects($this->exactly(2))
@@ -69,7 +69,7 @@ class RequestTest extends TestCase
         $mockResponse->expects($this->exactly(2))
             ->method('isSuccess')
             ->willReturn(true);
-        $mockResponse->expects($this->exactly(2))
+        $mockResponse->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(200);
         $mockResponse->expects($this->exactly(2))
