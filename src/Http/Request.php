@@ -82,7 +82,7 @@ class Request
     {
         $content = $response->getContent();
 
-        if (!isset($content) || !(in_array($response->getStatusCode(), [302, 200, 201, 204]) || $response->isSuccess())) {
+        if (!(in_array($response->getStatusCode(), [302, 200, 201, 204]) || $response->isSuccess()) || !isset($content)) {
             if (in_array($response->getStatusCode(), [400, 403, 404, 410, 422])) {
                 // Set Specific error Message for form submission
                 if ($response->getStatusCode() === 422) {
