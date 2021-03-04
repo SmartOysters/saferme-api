@@ -44,7 +44,7 @@ class Response
      */
     public function isSuccess()
     {
-        if (in_array($this->statusCode, [200,201,202,204,206,302])) {
+        if (in_array($this->statusCode, [200,201,202,204,206,207,302])) {
             return true;
         }
 

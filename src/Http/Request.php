@@ -88,6 +88,9 @@ class Request
                 if ($response->getStatusCode() === 422) {
                     $content = 'Form Validation Error';
                 }
+                if ($response->getStatusCode() === 403) {
+                    $content = 'Forbidden: You do not have permission to access this resource.';
+                }
                 $responseException = new ResponseException(
                     (isset($content) ? $content : "Error unknown."),
                     $response->getStatusCode()
