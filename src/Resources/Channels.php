@@ -186,6 +186,36 @@ class Channels extends Resource
     }
 
     /**
+     * Adding users to a channel
+     *
+     * @param  int   $channel_id
+     * @param  array $data
+     * @param  array $options
+     * @return Response
+     */
+    public function add_multiple_users($channel_id, $data = [], $options = [])
+    {
+        $options = array_merge(
+            compact('channel_id', 'data'),
+            $options
+        );
+
+        return $this->request->post(':channel_id/users/add_multiple', compact('channel_id', 'user_id'));
+    }
+
+    /**
+     * Removing a user from a channel
+     *
+     * @param  int  $channel_id
+     * @param  int  $user_id
+     * @return Response
+     */
+    public function delete_channel_user($channel_id, $user_id)
+    {
+        return $this->request->delete(':channel_id/users/:user_id', compact('channel_id', 'user_id'));
+    }
+
+    /**
      * Return Reports for each Channel
      *
      * @param $channel_id
