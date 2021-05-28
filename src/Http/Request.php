@@ -91,6 +91,9 @@ class Request
                 if ($response->getStatusCode() === 403) {
                     $content = 'Forbidden: You do not have permission to access this resource.';
                 }
+                if ($response->getStatusCode() === 400) {
+                    $content = "Validation failed: User Input Incorrect";
+                }
                 $responseException = new ResponseException(
                     (isset($content) ? $content : "Error unknown."),
                     $response->getStatusCode()
