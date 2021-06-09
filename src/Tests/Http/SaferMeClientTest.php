@@ -18,15 +18,13 @@ use SmartOysters\SaferMe\Http\SaferMeClient;
 
 class SaferMeClientTest extends TestCase
 {
-    protected function setUp(): void
+
+    public function testConstructor()
     {
         if (!class_exists(Client::class)) {
             $this->markTestSkipped('The GuzzleHttp Component is not available.');
         }
-    }
 
-    public function testConstructor()
-    {
         $saferMeClient = new SaferMeClient('foo', 'bar', 'fooId');
 
         $this->assertInstanceOf(Client::class, $saferMeClient->getClient());
@@ -44,6 +42,10 @@ class SaferMeClientTest extends TestCase
 
     public function testAddTeamId()
     {
+        if (!class_exists(Client::class)) {
+            $this->markTestSkipped('The GuzzleHttp Component is not available.');
+        }
+
         $saferMeClient = new SaferMeClient('foo', 'bar', 'fooId', 1234);
 
         $this->assertInstanceOf(Client::class, $saferMeClient->getClient());
@@ -63,6 +65,10 @@ class SaferMeClientTest extends TestCase
 
     public function testAddHeaders()
     {
+        if (!class_exists(Client::class)) {
+            $this->markTestSkipped('The GuzzleHttp Component is not available.');
+        }
+
         $saferMeClient = new SaferMeClient('foo', 'bar', 'fooId', null, '', [
             'headers' => [
                 'foo' => 'bar',
