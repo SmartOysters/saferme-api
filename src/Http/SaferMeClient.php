@@ -40,6 +40,11 @@ class SaferMeClient implements Client
             'X-InstallationId' => $installationId
         ], ((!is_null($teamId)) ? ['X-TeamId' => $teamId] : []));
 
+        if (array_key_exists('headers', $options)) {
+            $headers = array_merge($headers, $options['headers']);
+            unset($options['headers']);
+        }
+
         $this->client = new GuzzleClient(array_merge([
             'base_uri' => $url,
             'query'    => $query,

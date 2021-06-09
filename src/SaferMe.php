@@ -78,11 +78,24 @@ class SaferMe
      * Reset the TeamID in the header
      *
      * @param int $id
-     * @return $this
+     * @return SaferMe
      */
     public function team(int $id): self
     {
         $this->teamId = $id;
+
+        return $this;
+    }
+
+    /**
+     * Set Headers that are to be packaged with the query
+     *
+     * @param array $headers
+     * @return SaferMe
+     */
+    public function addHeaders($headers)
+    {
+        $this->options['headers'] = $headers;
 
         return $this;
     }
