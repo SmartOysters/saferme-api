@@ -147,7 +147,7 @@ class Request
      */
     public function __call($name, $args = [])
     {
-        if (in_array($name, ['get', 'post', 'put', 'patch', 'delete'])) {
+        if (in_array($name, ['get', 'post', 'put', 'patch', 'head', 'delete'])) {
             $options = !empty($args[1]) ? $args[1] : [];
 
             return $this->performRequest($name, $args[0], $options);

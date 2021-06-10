@@ -158,6 +158,20 @@ class SaferMeClient implements Client
     }
 
     /**
+     * Perform a HEAD request.
+     *
+     * @param $url
+     * @param array $parameters
+     * @return Response
+     */
+    public function head($url, $parameters = [])
+    {
+        $request = new GuzzleRequest('HEAD', $url);
+
+        return $this->execute($request, ['json' => $parameters]);
+    }
+
+    /**
      * Perform a DELETE request.
      *
      * @param       $url

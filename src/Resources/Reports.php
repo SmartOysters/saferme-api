@@ -30,6 +30,17 @@ class Reports extends Resource
     }
 
     /**
+     * Fetch the HEAD data for report state changes when finding by ID.
+     *
+     * @param  int $report_id Entity ID to find head data for.
+     * @return Response
+     */
+    public function report_state_changes_head($report_id)
+    {
+        return $this->request->head(':report_id/report_state_changes', compact('report_id'));
+    }
+
+    /**
      * Search the reports API
      *
      * @note: https://github.com/SaferMe/saferme-api-docs/blob/teams/030_reports.md#search-for-reports
