@@ -88,6 +88,9 @@ class Request
                 if ($response->getStatusCode() === 422) {
                     $content = 'Form Validation Error';
                 }
+                if ($response->getStatusCode() === 404) {
+                    $content = 'Not Found: Resource was not found with the query.';
+                }
                 if ($response->getStatusCode() === 403) {
                     $content = 'Forbidden: You do not have permission to access this resource.';
                 }
