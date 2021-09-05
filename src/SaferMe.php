@@ -10,6 +10,7 @@ use SmartOysters\SaferMe\Resources\Analytics;
 use SmartOysters\SaferMe\Resources\Channels;
 use SmartOysters\SaferMe\Resources\Reports;
 use SmartOysters\SaferMe\Resources\ReportSearch;
+use SmartOysters\SaferMe\Resources\Shapes;
 use SmartOysters\SaferMe\Resources\Teams;
 
 
@@ -19,6 +20,7 @@ use SmartOysters\SaferMe\Resources\Teams;
  * @method Channels channels()
  * @method Reports reports()
  * @method ReportSearch reportSearch()
+ * @method Shapes shapes()
  * @method Teams teams()
  */
 class SaferMe
