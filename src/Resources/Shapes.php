@@ -15,14 +15,14 @@ class Shapes extends Resource
      * @note: https://github.com/SaferMe/saferme-api-docs/blob/teams/060_shapes.md#create-a-shape
      *
      * @param int   $team_id
-     * @param array $shape
+     * @param array $data
      * @param array $options
      * @return Response
      */
-    public function new_shape($shape_id, $shape = [], $options = [])
+    public function new_shape($shape_id, $data = [], $options = [])
     {
         $options = array_merge(
-            compact('shape_id', 'shape'),
+            compact('shape_id', 'data'),
             $options
         );
 
