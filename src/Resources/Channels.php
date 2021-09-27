@@ -63,8 +63,9 @@ class Channels extends Resource
     public function update_channel($channel_id, $category_id, $data = [], $options = [])
     {
         $options = array_merge(
-            compact('channel_id', 'category_id', 'data'),
-            $options
+            compact('channel_id', 'category_id'),
+            $options,
+            $data
         );
 
         return $this->request->patch(':channel_id/categories/:category_id', $options);
