@@ -67,6 +67,26 @@ class Teams extends Resource
         return $this->request->post(':team_id/team_users/bulk_create', $options);
     }
 
+        /**
+     * Remove TeamUsers for a team.
+     * 
+     * @link https://github.com/SaferMe/saferme-api-docs/blob/teams/120_team.md#bulk-remove-users-to-a-team
+     *
+     * @param int   $team_id
+     * @param array $payload
+     * @param array $options
+     * @return Response
+     */
+    public function bulk_destroy($team_id, $data, $options = [])
+    {
+        $options = array_merge(
+            compact('team_id','data'),
+            $options
+        );
+
+        return $this->request->post(':team_id/team_users/bulk_destroy', $options);
+    }
+
     /**
      * Added Users to a Channel via Team endpoints
      *
