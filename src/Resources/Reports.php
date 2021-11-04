@@ -59,4 +59,22 @@ class Reports extends Resource
         return $this->request->get('search', $options);
     }
 
+    /**
+     * Update the entity details by ID.
+     *
+     * @param  int $report_id Entity ID to find.
+     * @param array $report
+     * @param array $options
+     * @return Response
+     */
+    public function update($report_id, $report, $options = [])
+    {
+        $options = array_merge(
+            compact('report_id','report'),
+            $options
+        );
+
+        return $this->request->patch(':report_id', $options);
+    }
+
 }
