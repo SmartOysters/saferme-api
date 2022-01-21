@@ -42,6 +42,18 @@ class Channels extends Resource
     }
 
     /**
+     * @param int    $channel_id  Entity ID of the channel id
+     * @param int    $category_id Category
+     * @return Response
+     */
+    public function delete_category($channel_id, $category_id)
+    {
+        $options = compact('channel_id', 'category_id');
+
+        return $this->request->delete(':channel_id/categories/:category_id', $options);
+    }
+
+    /**
      * Fetch the channel with the Root Category ID.
      *
      * @param int $channel_id Entity ID to find.
