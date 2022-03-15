@@ -8,6 +8,26 @@ use SmartOysters\SaferMe\Http\Response;
 class Teams extends Resource
 {
     /**
+     * Update a Team
+     *
+     * @link https://saferme.github.io/saferme-api-docs/teams.html#update-a-team
+     *
+     * @param int   $team_id Entity ID interact with.
+     * @param array $team
+     * @param array $options
+     * @return Response
+     */
+    public function team_update($team_id, $team, $options = [])
+    {
+        $options = array_merge(
+            compact('team_id','team'),
+            $options
+        );
+
+        return $this->request->patch(':team_id', $options);
+    }
+
+    /**
      * Get the TeamUsers from team.
      *
      * @link https://github.com/SaferMe/saferme-api-docs/blob/teams/120_team.md#list-team-users
