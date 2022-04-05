@@ -4,7 +4,7 @@
 
 This package provides a complete **framework agnostic** SaferMe API client library for PHP.
 
-Feel free to drop me a message at __james.rickard@smartoysters.com__ or tweet me at [@frodosghost](https://twitter.com/frodosghost).
+Feel free to drop me a message at __james.rickard@oceanfarmr.com__ or tweet me at [@frodosghost](https://twitter.com/frodosghost).
 
 # Documentation
 
@@ -28,18 +28,26 @@ Or simply add it to your composer.json dependences and run `composer update`:
 
 # Usage
 
-Following details provided on the [authentication](https://github.com/SaferMe/saferme-api-docs/blob/master/005_authentication.md) doc page.
+Following details provided on the [authentication](https://saferme.github.io/saferme-api-docs/sessions.html) doc page.
 
 `$installationId` is requested to be `something-unique-for-this-client-this-app-and-this-api-key`. We generated this value at [random.org](https://www.random.org/strings/?num=10&len=20&digits=on&upperalpha=on&loweralpha=on&unique=on&format=html&rnd=new), and select one of the generated keys, and use that in the integration.
 `$teamId` is set to extract information from an Organisation within SaferMe.
 
 ```php
-$token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx';
+$email = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx';
+$password = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx';
 $appId = 'com.thundermaps.main';
+$appBundleId = 'com.thundermaps.saferme';
 $teamId = 1234;
 $installationId = '';
 
-$saferme = new SaferMe($token, $appId, $teamId, $installationId);
+$saferme = new SaferMe::OAuth([
+    'email' => $email,
+    'password' => $password,
+    'appId' => $appId,
+    'appBundleId' => $appBundleId,
+    'installationId' => $installationId
+]);
 ```
 
 ## Teams
@@ -48,7 +56,14 @@ If you are using this Client to access multiple teams, you can configure to inje
 
 ```php
 // As above
-$saferme = new SaferMe($token, $appId, $teamId, $installationId);
+$saferme = new SaferMe::OAuth([
+    'email' => $email,
+    'password' => $password,
+    'appId' => $appId,
+    'teamId' => $teamId,
+    'appBundleId' => $appBundleId,
+    'installationId' => $installationId
+]);
 
 $teamId = 4321;
 
@@ -67,7 +82,13 @@ $options = [
     'proxy'           => '192.168.16.1:10'
 ];
 
-$saferme = new SaferMe($token, $appId, $teamId, $installationId, $options);
+$saferme = new SaferMe::OAuth([
+    'email' => $email,
+    'password' => $password,
+    'appId' => $appId,
+    'installationId' => $installationId,
+    'options' => $options
+]);
 ```
 
 # Inspiration

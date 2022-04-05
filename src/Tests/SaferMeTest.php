@@ -24,7 +24,25 @@ class SaferMeTest extends TestCase
 
     public function testAlertAreasResourceObject()
     {
-        $saferMe = new SaferMe();
+        $mockStorage = $this->createMock('SmartOysters\SaferMe\Token\SaferMeStorage');
+
+        $mockToken = $this->createMock('SmartOysters\SaferMe\Token\SaferMeToken');
+        $mockToken->expects($this->exactly(2))
+            ->method('getAccessToken')
+            ->willReturn('foo');
+        $mockToken->expects($this->exactly(2))
+            ->method('valid')
+            ->willReturn(true);
+        $mockStorage->expects($this->exactly(2))
+            ->method('getToken')
+            ->willReturn($mockToken);
+
+        $saferMe = SaferMe::OAuth([
+            'uri' => 'foo.com/',
+            'clientEmail' => 'foo',
+            'clientPassword' => 'bar',
+            'storage' => $mockStorage
+        ]);
 
         $this->assertInstanceOf('SmartOysters\SaferMe\Resources\AlertAreas', $saferMe->alertAreas());
         $this->assertInstanceOf('SmartOysters\SaferMe\Resources\AlertAreas', $saferMe->alert_areas());
@@ -32,7 +50,25 @@ class SaferMeTest extends TestCase
 
     public function testAlertAreasMagicMethod()
     {
-        $saferMe = new SaferMe();
+        $mockStorage = $this->createMock('SmartOysters\SaferMe\Token\SaferMeStorage');
+
+        $mockToken = $this->createMock('SmartOysters\SaferMe\Token\SaferMeToken');
+        $mockToken->expects($this->exactly(2))
+            ->method('getAccessToken')
+            ->willReturn('foo');
+        $mockToken->expects($this->exactly(2))
+            ->method('valid')
+            ->willReturn(true);
+        $mockStorage->expects($this->exactly(2))
+            ->method('getToken')
+            ->willReturn($mockToken);
+
+        $saferMe = SaferMe::OAuth([
+            'uri' => 'foo.com/',
+            'clientEmail' => 'foo',
+            'clientPassword' => 'bar',
+            'storage' => $mockStorage
+        ]);
 
         $this->assertInstanceOf('SmartOysters\SaferMe\Resources\AlertAreas', $saferMe->alertAreas);
         $this->assertInstanceOf('SmartOysters\SaferMe\Resources\AlertAreas', $saferMe->alert_areas);

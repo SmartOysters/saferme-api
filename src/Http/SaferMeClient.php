@@ -35,7 +35,7 @@ class SaferMeClient implements Client
         list($headers, $query) = [[], []];
 
         $headers = array_merge([
-            'Authorization' => "Token token=$token",
+            'Authorization' => "Token token={$token->getAccessToken()}",
             'X-AppId' => $appId,
             'X-InstallationId' => $installationId
         ], ((!is_null($teamId)) ? ['X-TeamId' => $teamId] : []));
@@ -50,6 +50,27 @@ class SaferMeClient implements Client
             'query'    => $query,
             'headers'  => $headers
         ], $options));
+    }
+
+    /**
+     * Create an OAuth client.
+     *
+     * @param $url
+     * @param $storage
+     * @param $saferMe
+     * @return SaferMeClient
+     */
+    public static function OAuth($url, $storage, $saferMe)
+    {
+        $token = $storage->getToken();
+
+        if (! $token || ! $token->valid()) {
+            $token = $saferMe->authorize();
+        }
+
+        $token->refreshIfNeeded($saferMe);
+
+        return new self($url, $token, $saferMe->getAppId(), $saferMe->getTeamId(), $saferMe->getInstallationId(), $saferMe->getOptions());
     }
 
     /**

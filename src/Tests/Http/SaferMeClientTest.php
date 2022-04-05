@@ -27,7 +27,12 @@ class SaferMeClientTest extends TestCase
             $this->markTestSkipped('The GuzzleHttp Component is not available.');
         }
 
-        $saferMeClient = new SaferMeClient('foo', 'bar', 'fooId');
+        $mockToken = $this->createMock('SmartOysters\SaferMe\Token\SaferMeToken');
+        $mockToken->expects($this->once())
+            ->method('getAccessToken')
+            ->willReturn('foo');
+
+        $saferMeClient = new SaferMeClient('foo', $mockToken, 'fooId');
 
         $this->assertInstanceOf(Client::class, $saferMeClient->getClient());
 
@@ -38,7 +43,7 @@ class SaferMeClientTest extends TestCase
         $this->assertArrayHasKey('X-InstallationId', $headers);
         $this->assertArrayNotHasKey('X-TeamId', $headers);
 
-        $this->assertEquals('Token token=bar', $headers['Authorization']);
+        $this->assertEquals('Token token=foo', $headers['Authorization']);
         $this->assertEquals('fooId', $headers['X-AppId']);
     }
 
@@ -48,7 +53,12 @@ class SaferMeClientTest extends TestCase
             $this->markTestSkipped('The GuzzleHttp Component is not available.');
         }
 
-        $saferMeClient = new SaferMeClient('foo', 'bar', 'fooId', 1234);
+        $mockToken = $this->createMock('SmartOysters\SaferMe\Token\SaferMeToken');
+        $mockToken->expects($this->once())
+            ->method('getAccessToken')
+            ->willReturn('foo');
+
+        $saferMeClient = new SaferMeClient('foo', $mockToken, 'fooId', 1234);
 
         $this->assertInstanceOf(Client::class, $saferMeClient->getClient());
 
@@ -59,7 +69,7 @@ class SaferMeClientTest extends TestCase
         $this->assertArrayHasKey('X-InstallationId', $headers);
         $this->assertArrayHasKey('X-TeamId', $headers);
 
-        $this->assertEquals('Token token=bar', $headers['Authorization']);
+        $this->assertEquals('Token token=foo', $headers['Authorization']);
         $this->assertEquals('fooId', $headers['X-AppId']);
         $this->assertEquals(1234, $headers['X-TeamId']);
 
@@ -71,7 +81,12 @@ class SaferMeClientTest extends TestCase
             $this->markTestSkipped('The GuzzleHttp Component is not available.');
         }
 
-        $saferMeClient = new SaferMeClient('foo', 'bar', 'fooId', null, '', [
+        $mockToken = $this->createMock('SmartOysters\SaferMe\Token\SaferMeToken');
+        $mockToken->expects($this->once())
+            ->method('getAccessToken')
+            ->willReturn('foo');
+
+        $saferMeClient = new SaferMeClient('foo', $mockToken, 'fooId', null, '', [
             'headers' => [
                 'foo' => 'bar',
                 'Foo-Bar' => 'foo'
@@ -88,7 +103,7 @@ class SaferMeClientTest extends TestCase
         $this->assertArrayHasKey('foo', $headers);
         $this->assertArrayHasKey('Foo-Bar', $headers);
 
-        $this->assertEquals('Token token=bar', $headers['Authorization']);
+        $this->assertEquals('Token token=foo', $headers['Authorization']);
         $this->assertEquals('fooId', $headers['X-AppId']);
         $this->assertEquals('bar', $headers['foo']);
         $this->assertEquals('foo', $headers['Foo-Bar']);
