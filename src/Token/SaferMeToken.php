@@ -241,10 +241,17 @@ class SaferMeToken
     {
         $now = new \DateTime();
         $utcTime = new \DateTimeZone('UTC');
-        $tokenTime = new \DateTime($this->expiresAt);
-        $tokenTime->setTimezone($utcTime);
 
-        return (bool) $tokenTime->diff($now)->format('%s') < 1;
+        try {
+            $tokenTime = new \DateTime($this->expiresAt);
+            $tokenTime->setTimezone($utcTime);
+        } catch (\Exception $e) {
+            // Sets time for current time if fails
+            $tokenTime = $now;
+        }
+
+        // If the Token is older than now
+        return ($tokenTime <= $now);
     }
 
     /**
