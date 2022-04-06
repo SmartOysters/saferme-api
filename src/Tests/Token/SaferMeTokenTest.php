@@ -36,4 +36,29 @@ class SaferMeTokenTest extends TestCase
         $this->assertEquals('bar', $token->getTokenType());
         $this->assertEquals('foobar', $token->getBrandedAppId());
     }
+
+    public function testNeedsRefresh()
+    {
+        $token = new SaferMeToken();
+
+        $this->assertFalse($token->needsRefresh(), '->needsRefresh() returns false no refresh when first exists');
+    }
+
+    public function testNeedsRefreshOlderTime()
+    {
+        $token = new SaferMeToken([
+            'expires_at' => '2022-02-05T20:22:07.622+10:00'
+        ]);
+
+        $this->assertTrue($token->needsRefresh(), '->needsRefresh() returns true token needs refresh with older date');
+    }
+
+    public function testNeedsRefreshFutureTime()
+    {
+        $token = new SaferMeToken([
+            'expires_at' => '2223-02-15T20:22:07.622+10:00'
+        ]);
+
+        $this->assertFalse($token->needsRefresh(), '->needsRefresh() returns false because date still in future');
+    }
 }
