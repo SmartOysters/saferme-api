@@ -63,6 +63,12 @@ class SaferMeClient implements Client
     {
         $options = $this->getClient()
             ->getConfig();
+
+        if (array_key_exists('headers', $parameters)) {
+            $options['headers'] = array_merge($options['headers'], $parameters['headers']);
+            unset($parameters['headers']);
+        }
+
         $this->arraySet($options, 'query', array_merge($parameters, $options['query']));
 
         // For this particular case we have to include the parameters into the
@@ -189,10 +195,11 @@ class SaferMeClient implements Client
      * Execute the request and returns the Response object.
      *
      * @param GuzzleRequest     $request
+     * @param array             $options
      * @param GuzzleClient|null $client
      * @return Response
      */
-    protected function execute(GuzzleRequest $request, array $options = [], $client = null)
+    protected function execute(GuzzleRequest $request, $options = [], $client = null)
     {
         $client = $client ?: $this->getClient();
 
@@ -232,5 +239,18 @@ class SaferMeClient implements Client
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * Overwrite the existing Configured Client
+     *
+     * @param GuzzleClient $client
+     * @return $this
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+
+        return $this;
     }
 }
