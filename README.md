@@ -1,6 +1,6 @@
 # SaferMe API PHP Package
 
-[![Build Status](https://www.travis-ci.com/SmartOysters/saferme-api.svg?branch=master)](https://www.travis-ci.com/SmartOysters/saferme-api)
+[![Build Status](https://app.travis-ci.com/SmartOysters/saferme-api.svg?branch=master)](https://app.travis-ci.com/SmartOysters/saferme-api)
 
 This package provides a complete **framework agnostic** SaferMe API client library for PHP.
 
