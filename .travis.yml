@@ -11,39 +11,22 @@ env:
 matrix:
     fast_finish: true
     include:
-        # Minimum supported dependencies with the latest and oldest PHP version
-        -   php: 7.2
-            env: SYMFONY_DEPRECATIONS_HELPER="max[self]=0"
-        -   php: 7.1
-            env: SYMFONY_DEPRECATIONS_HELPER="max[self]=0"
-
-            # Test the latest stable release
-        -   php: 7.1
-        -   php: 7.2
-            env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
-
-            # Test LTS versions. This makes sure we do not use Symfony packages with version greater
-            # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
-        -   php: 7.2
-            env: DEPENDENCIES="symfony/lts:^2"
-        -   php: 7.2
-            env: DEPENDENCIES="symfony/lts:^3"
-
-            # Latest commit to master
-        -   php: 7.2
-            env: STABILITY="dev"
-
-            # Test the latest stable release
-        - php: 7.4
-          env:
+      # Test the latest stable release
+      - php: 7.4
+        env:
             - COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
             - XDEBUG_MODE="coverage"
 
-            # Latest commit to master
-        - php: 7.4
-          env:
+      # Latest commit to master
+      - php: 7.4
+        env:
             - STABILITY="dev" COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
             - XDEBUG_MODE="coverage"
+
+      - php: 8.0
+        env:
+          - STABILITY="dev" COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+          - XDEBUG_MODE="coverage"
 
     allow_failures:
         # Dev-master is allowed to fail.
