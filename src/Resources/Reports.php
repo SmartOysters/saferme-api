@@ -21,12 +21,13 @@ class Reports extends Resource
     /**
      * Fetch the report state changes when finding by ID.
      *
-     * @param  int $report_id Entity ID to find.
+     * @param  int  $report_id Entity ID to find.
+     * @param array $headers   Set the headers for the request
      * @return Response
      */
-    public function report_state_changes($report_id)
+    public function report_state_changes($report_id, $headers = array())
     {
-        return $this->request->get(':report_id/report_state_changes', compact('report_id'));
+        return $this->request->get(':report_id/report_state_changes', compact('report_id', 'headers'));
     }
 
     /**
