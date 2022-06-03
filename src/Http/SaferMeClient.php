@@ -41,7 +41,7 @@ class SaferMeClient implements Client
             $headers['Authorization'] = "Token token=$token";
         }
 
-        $headers = array_merge([
+        $headers = array_merge($headers, [
             'X-AppId' => $appId,
             'X-InstallationId' => $installationId
         ], ((!is_null($teamId)) ? ['X-TeamId' => $teamId] : []));
