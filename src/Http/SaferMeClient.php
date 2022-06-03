@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ConnectException;
 use SmartOysters\SaferMe\Helpers\ArrayHelpers;
+use SmartOysters\SaferMe\Token\SaferMeToken;
 
 class SaferMeClient implements Client
 {
@@ -23,19 +24,24 @@ class SaferMeClient implements Client
     /**
      * SaferMeClient constructor.
      *
-     * @param string    $url
-     * @param string    $token
-     * @param string    $appId
-     * @param int|null  $teamId
-     * @param string    $installationId
-     * @param array     $options
+     * @param string              $url
+     * @param SaferMeToken|string $token
+     * @param string              $appId
+     * @param int|null            $teamId
+     * @param string              $installationId
+     * @param array               $options
      */
     public function __construct($url, $token, $appId = 'com.thundermaps.main', $teamId = null, $installationId = '', $options = [])
     {
         list($headers, $query) = [[], []];
 
+        if (gettype($token) === 'object') {
+            $headers['Authorization'] = "Token token={$token->getAccessToken()}";
+        } else {
+            $headers['Authorization'] = "Token token=$token";
+        }
+
         $headers = array_merge([
-            'Authorization' => "Token token={$token->getAccessToken()}",
             'X-AppId' => $appId,
             'X-InstallationId' => $installationId
         ], ((!is_null($teamId)) ? ['X-TeamId' => $teamId] : []));
