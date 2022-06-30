@@ -78,4 +78,24 @@ class Reports extends Resource
         return $this->request->patch(':report_id', $options);
     }
 
+    /**
+     * Update a FeatureUuid from the provided Report
+     *
+     * @param  int    $report_id    Report Entity to update
+     * @param  string $feature_uuid Mapbox FeatureUuid to be included with Report
+     * @return Response
+     */
+    public function updateFeature($report_id, $feature_uuid)
+    {
+        $options = array_merge(compact('report_id'), [
+            'data' => [
+                'feature' => [
+                    'feature_uuid' => $feature_uuid
+                ]
+            ]
+        ]);
+
+        return $this->request->post(':report_id/update_feature', $options);
+    }
+
 }
