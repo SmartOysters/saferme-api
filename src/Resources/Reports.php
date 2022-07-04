@@ -19,6 +19,23 @@ class Reports extends Resource
     }
 
     /**
+     * Fetch the entity details by ID.
+     * @note: https://saferme.github.io/saferme-api-docs/reports.html#available-report-fields
+     *
+     * @param  int  $report_id Entity ID to find.
+     * @param array $fields    Fields to append to the query
+     * @return Response
+     */
+    public function fetchFields($report_id, $fields = [])
+    {
+        $options = array_merge(compact('report_id'), [
+            'fields' => $fields
+        ]);
+
+        return $this->request->get(':report_id', $options);
+    }
+
+    /**
      * Fetch the report state changes when finding by ID.
      *
      * @param  int  $report_id Entity ID to find.
