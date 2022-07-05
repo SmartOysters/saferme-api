@@ -11,6 +11,22 @@ class Shapes extends Resource
 
     /**
      * Create a New Shape
+     * @note: https://saferme.github.io/saferme-api-docs/shapes.html#create-a-shape
+     *
+     * @param array $data
+     * @param array $options
+     * @return Response
+     */
+    public function create_shape($data = [], $options = [])
+    {
+        return $this->request->post('', array_merge(
+            compact('data'),
+            $options
+        ));
+    }
+
+    /**
+     * Create a New Shape
      *
      * @note: https://github.com/SaferMe/saferme-api-docs/blob/teams/060_shapes.md#create-a-shape
      *
