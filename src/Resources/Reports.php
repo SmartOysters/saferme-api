@@ -78,6 +78,17 @@ class Reports extends Resource
     }
 
     /**
+     * Filter reports based on data provided in get query
+     *
+     * @param  array $filter
+     * @return Response
+     */
+    public function filter($filter)
+    {
+        return $this->request->get('', $filter);
+    }
+
+    /**
      * Update the entity details by ID.
      *
      * @param  int $report_id Entity ID to find.
