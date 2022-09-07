@@ -245,4 +245,15 @@ class Channels extends Resource
 
         return $this->request->get(':channel_id/reports', $options);
     }
+
+    /**
+     * Fetch the HEAD data for categories when finding by Channel ID.
+     *
+     * @param  int $channel_id Entity ID to find head data for.
+     * @return Response
+     */
+    public function categories_head($channel_id)
+    {
+        return $this->request->head(':channel_id/categories', compact('channel_id'));
+    }
 }
