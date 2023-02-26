@@ -6,6 +6,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use SmartOysters\SaferMe\Helpers\StringHelpers;
 use SmartOysters\SaferMe\Http\SaferMeClient;
 use SmartOysters\SaferMe\Http\Request;
+use SmartOysters\SaferMe\Resources\ResetPasswords;
 use SmartOysters\SaferMe\Resources\Session;
 use SmartOysters\SaferMe\Token\SaferMeToken;
 use SmartOysters\SaferMe\Resources\AlertAreas;
@@ -22,6 +23,7 @@ use SmartOysters\SaferMe\Resources\Teams;
  * @method Analytics analytics()
  * @method Channels channels()
  * @method Reports reports()
+ * @method ResetPasswords resetPasswords()
  * @method ReportSearch reportSearch()
  * @method Session session()
  * @method Shapes shapes()
