@@ -245,8 +245,8 @@ class SaferMeClient implements Client
                 json_decode($response->getBody(), true),
                 ['errors' => $response->getHeader('X-Status-Reason')]
             );
-        } elseif (in_array($response->getStatusCode(), [422]) ) {
-            $body = json_decode($response->getBody()->getContents(), true);
+        } elseif (in_array($response->getStatusCode(), [422, 420]) ) {
+            $body = json_decode((string) $response->getBody(), true);
         } elseif ($response->getHeader('location')) {
             $body = $response->getHeader('location');
         } else {
