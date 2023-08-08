@@ -41,7 +41,7 @@ class SaferMeTokenTest extends TestCase
     {
         $token = new SaferMeToken();
 
-        $this->assertFalse($token->needsRefresh(), '->needsRefresh() returns false no refresh when first exists');
+        $this->assertTrue($token->needsRefresh(), '->needsRefresh() returns true when no expiry set');
     }
 
     public function testNeedsRefreshOlderTime()
