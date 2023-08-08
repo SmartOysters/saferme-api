@@ -38,7 +38,7 @@ class SaferMeTest extends TestCase
             ->willReturn($mockToken);
 
         $saferMe = SaferMe::OAuth([
-            'uri' => 'foo.com/',
+            'uris' => ['foo.com/'],
             'clientEmail' => 'foo',
             'clientPassword' => 'bar',
             'storage' => $mockStorage
@@ -64,7 +64,7 @@ class SaferMeTest extends TestCase
             ->willReturn($mockToken);
 
         $saferMe = SaferMe::OAuth([
-            'uri' => 'foo.com/',
+            'uris' => ['foo.com/'],
             'clientEmail' => 'foo',
             'clientPassword' => 'bar',
             'storage' => $mockStorage
