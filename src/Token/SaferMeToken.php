@@ -239,19 +239,19 @@ class SaferMeToken
      */
     public function needsRefresh()
     {
-        $now = new \DateTime();
+        $elevenMonths = new \DateTime('+ 11 months');
         $utcTime = new \DateTimeZone('UTC');
 
         try {
             $tokenTime = new \DateTime($this->expiresAt);
             $tokenTime->setTimezone($utcTime);
         } catch (\Exception $e) {
-            // Sets time for current time if fails
-            $tokenTime = $now;
+            // Sets time for currne ttime plus 11 months if fails
+            $tokenTime = $elevenMonths;
         }
 
-        // If the Token is older than now
-        return ($tokenTime <= $now);
+        // If the Token is older than one month - it expires in less than 11 months
+        return ($tokenTime <= $elevenMonths);
     }
 
     /**
