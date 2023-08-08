@@ -207,7 +207,7 @@ class SaferMeToken
             ]
         ]);
 
-        $response = $client->request('POST', $saferMe->getBaseURI() . 'session', [
+        $response = $client->request('POST', $this->arrayElementRandom($saferMe->getBaseURIs()) . 'session', [
             'json' => [
                 'session' => $saferMe->getSessionCredentials()
             ]

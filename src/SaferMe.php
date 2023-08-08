@@ -3,6 +3,7 @@
 namespace SmartOysters\SaferMe;
 
 use GuzzleHttp\Client as GuzzleClient;
+use SmartOysters\SaferMe\Helpers\ArrayHelpers;
 use SmartOysters\SaferMe\Helpers\StringHelpers;
 use SmartOysters\SaferMe\Http\SaferMeClient;
 use SmartOysters\SaferMe\Http\Request;
@@ -31,14 +32,15 @@ use SmartOysters\SaferMe\Resources\Teams;
  */
 class SaferMe
 {
+    use ArrayHelpers;
     use StringHelpers;
 
     /**
-     * The base URI.
+     * The array of base URIs.
      *
-     * @var string
+     * @var array
      */
-    protected $baseURI;
+    protected $baseURIs;
 
     /**
      * @var mixed|string
@@ -94,10 +96,21 @@ class SaferMe
     /**
      * SaferMe constructor
      */
-    public function __construct($token = '', $uri = 'https://public-api.thundermaps.com/api/v4/', $appId = 'com.thundermaps.main', $teamId = 1234, $installationId = '1234abcd', $options = [])
-    {
+    public function __construct(
+        $token = '', 
+        $uris = [
+            'https://api1.prod.infra.oceanfarmr.com/api/v4/',
+            'https://api2.prod.infra.oceanfarmr.com/api/v4/',
+            'https://api3.prod.infra.oceanfarmr.com/api/v4/',
+            'https://api4.prod.infra.oceanfarmr.com/api/v4/'
+        ],
+        $appId = 'com.thundermaps.main',
+        $teamId = 1234,
+        $installationId = '1234abcd',
+        $options = []
+    ) {
         $this->token = $token;
-        $this->baseURI = $uri;
+        $this->baseURIs = $uris;
         $this->appId = $appId;
         $this->teamId = $teamId;
         $this->installationId = $installationId;
@@ -226,7 +239,7 @@ class SaferMe
      */
     public static function OAuth($config)
     {
-        $new = new self('oauth', $config['uri']);
+        $new = new self('oauth', $config['uris']);
 
         $new->clientEmail = $config['clientEmail'];
         $new->clientPassword = $config['clientPassword'];
@@ -252,7 +265,7 @@ class SaferMe
             ]
         ]);
 
-        $response = $client->request('POST', $this->baseURI . 'session', [
+        $response = $client->request('POST', $this->arrayElementRandom($this->baseURIs) . 'session', [
             'json' => [
                 'session' => $this->getSessionCredentials()
             ]
@@ -315,7 +328,7 @@ class SaferMe
      */
     protected function getClient()
     {
-        return SaferMeClient::OAuth($this->getBaseURI(), $this->storage, $this);
+        return SaferMeClient::OAuth($this->arrayElementRandom($this->getBaseURIs()), $this->storage, $this);
     }
 
     /**
@@ -333,23 +346,23 @@ class SaferMe
     }
 
     /**
-     * Get the base URI.
+     * Get the base URIs.
      *
-     * @return string
+     * @return array
      */
-    public function getBaseURI()
+    public function getBaseURIs()
     {
-        return $this->baseURI;
+        return $this->baseURIs;
     }
 
     /**
-     * Set the base URI.
+     * Set the base URIs.
      *
-     * @param string $baseURI
+     * @param array $baseURIs
      */
-    public function setBaseURI($baseURI)
+    public function setBaseURIs($baseURIs)
     {
-        $this->baseURI = $baseURI;
+        $this->baseURIs = $baseURIs;
     }
 
     /**

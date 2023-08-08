@@ -91,4 +91,14 @@ trait ArrayHelpers
         return $array;
     }
 
+    /**
+     * Returns a random element from an indexed array.
+     */
+    public function arrayElementRandom(array $array)
+    {
+        $randomIndex = array_rand($array);
+        
+        return $array[$randomIndex];
+    }
+
 }
