@@ -96,6 +96,10 @@ trait ArrayHelpers
      */
     public function arrayElementRandom(array $array)
     {
+        if (empty($array)) {
+            return '';
+        }
+
         $randomIndex = array_rand($array);
         
         return $array[$randomIndex];
